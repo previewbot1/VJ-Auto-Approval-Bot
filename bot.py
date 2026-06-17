@@ -34,9 +34,8 @@ async def approve(_, m : Message):
         print(str(err))    
  
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Start ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 @app.on_message(filters.private & filters.command("start"))
-async def op(_, m :Message):
+async def op(_, m: Message):
     try:
         await app.get_chat_member(cfg.CHID, m.from_user.id)
     except:
@@ -44,33 +43,48 @@ async def op(_, m :Message):
             invite_link = await app.create_chat_invite_link(int(cfg.CHID))
         except:
             await m.reply("**Make Sure I Am Admin In Your Channel**")
-            return 
+            return
+
         key = InlineKeyboardMarkup(
             [[
-                InlineKeyboardButton("🍿 Join Update Channel 🍿", url=invite_link.invite_link),
-                InlineKeyboardButton("🍀 Check Again 🍀", callback_data="chk")
+                InlineKeyboardButton(
+                    "🍿 Join Update Channel 🍿",
+                    url=invite_link.invite_link
+                ),
+                InlineKeyboardButton(
+                    "🍀 Check Again 🍀",
+                    callback_data="chk"
+                )
             ]]
-        ) 
-        await m.reply_text("**⚠️Access Denied!⚠️\n\nPlease Join My Update Channel To Use Me.If You Joined The Channel Then Click On Check Again Button To Confirm.**", reply_markup=key)
-        return 
+        )
+
+        await m.reply_text(
+            "**⚠️Access Denied!⚠️\n\nPlease Join My Update Channel To Use Me.If You Joined The Channel Then Click On Check Again Button To Confirm.**",
+            reply_markup=key
+        )
+        return
+
     keyboard = InlineKeyboardMarkup(
         [[
             InlineKeyboardButton("🗯 Channel", url="https://t.me/vjotz"),
             InlineKeyboardButton("💬 Support", url="https://t.me/vj_bot_disscssion")
         ]]
     )
+
     add_user(m.from_user.id)
 
-await m.reply_text(
-    text=f"""**🦊 Hello {m.from_user.mention}!
+    await m.reply_text(
+        text=f"""**🦊 Hello {m.from_user.mention}!
 
 I'm an Auto Approve Bot.
 
 I can approve users in Groups/Channels.
 Add me to your chat and promote me to admin with add members permission.**""",
-    reply_markup=keyboard,
-    disable_web_page_preview=True
-)
+        reply_markup=keyboard,
+        disable_web_page_preview=True
+    )
+
+            
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ callback ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 @app.on_callback_query(filters.regex("chk"))
