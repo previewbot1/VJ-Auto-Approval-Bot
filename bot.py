@@ -60,9 +60,17 @@ async def op(_, m :Message):
         ]]
     )
     add_user(m.from_user.id)
-    await m.reply_photo("https://i.ibb.co/xSfs3BKg/IMG-20260617-000117-158.jpg", caption="**🦊 Hello {}!\nI'm an auto approve [Admin Join Requests]({}) Bot.\nI can approve users in Groups/Channels.Add me to your chat and promote me to admin with add members permission.\n\n__**".format(m.from_user.mention, "https://t.me/telegram/153"), reply_markup=keyboard)
-    
 
+await m.reply_text(
+    text=f"""**🦊 Hello {m.from_user.mention}!
+
+I'm an Auto Approve Bot.
+
+I can approve users in Groups/Channels.
+Add me to your chat and promote me to admin with add members permission.**""",
+    reply_markup=keyboard,
+    disable_web_page_preview=True
+)
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ callback ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 @app.on_callback_query(filters.regex("chk"))
